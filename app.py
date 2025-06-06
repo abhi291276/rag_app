@@ -1,7 +1,6 @@
 import os
 import tempfile
 import streamlit as st
-from dotenv import load_dotenv
 
 from utils import (
     load_document,
@@ -13,7 +12,6 @@ from utils import (
 )
 from langchain_openai import ChatOpenAI
 
-load_dotenv()
 st.set_page_config(page_title="RAG DocBot", layout="wide")
 st.title("📚 Document-Based Q&A Bot")
 
@@ -41,7 +39,7 @@ if uploaded_file:
             st.error("❌ No usable content found in the document.")
             st.stop()
 
-        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
+        llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=st.secrets["OPENAI_API_KEY"])
         vectorstore = create_vectorstore(docs)
         preview_text = text[:3000]
 
